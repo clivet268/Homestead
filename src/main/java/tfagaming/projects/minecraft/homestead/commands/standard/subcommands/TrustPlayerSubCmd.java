@@ -134,7 +134,8 @@ public class TrustPlayerSubCmd extends SubCommandBuilder {
 		List<String> suggestions = new ArrayList<>();
 
 		if (args.length == 1) {
-			suggestions.addAll(Homestead.getInstance().getOfflinePlayerNamesSync());
+			//TODO janky
+			return Homestead.accessTabSuggestions();
 		}
 
 		return suggestions;

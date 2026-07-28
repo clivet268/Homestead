@@ -80,9 +80,8 @@ public class TransferOwnershipSubCmd extends SubCommandBuilder {
 					RegionManager.getRegionNames()
 			);
 		} else if (args.length == 2) {
-			suggestions.addAll(
-					Homestead.getInstance().getOfflinePlayerNamesSync()
-			);
+			//TODO janky
+			return Homestead.accessTabSuggestions();
 		}
 
 		return suggestions;

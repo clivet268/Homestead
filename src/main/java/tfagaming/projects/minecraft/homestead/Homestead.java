@@ -85,6 +85,7 @@ public class Homestead extends JavaPlugin {
 	private static DiscordWebhookClient DISCORD_WEBHOOK;
 	private static long STARTED_AT;
 	private static TaskHandle MOVE_CHECK_TASK;
+	private static List<String> TAB_SUGGESTIONS = new ArrayList<>();
 
 	public static SnowflakeGenerator getSnowflake() {
 		return SnowflakeHolder.INSTANCE;
@@ -134,6 +135,16 @@ public class Homestead extends JavaPlugin {
 		if (DISCORD_WEBHOOK != null) {
 			DISCORD_WEBHOOK.callEventDiscordWebhook(event);
 		}
+	}
+
+	//TODO janky
+	public static List<String> accessTabSuggestions(){
+		if(TAB_SUGGESTIONS.isEmpty()){
+			if(Homestead.getInstance().isEnabled()) {
+				TAB_SUGGESTIONS.addAll(Homestead.getInstance().getOfflinePlayerNamesSync());
+			}
+		}
+		return TAB_SUGGESTIONS;
 	}
 
 	public void onEnable() {

@@ -53,8 +53,9 @@ public class PlayerInfoSubCmd extends SubCommandBuilder {
 
 		List<String> suggestions = new ArrayList<>();
 
+		//TODO janky
 		if (args.length == 1) {
-			suggestions.addAll(Homestead.getInstance().getOfflinePlayerNamesSync());
+			return Homestead.accessTabSuggestions();
 		}
 
 		return suggestions;
