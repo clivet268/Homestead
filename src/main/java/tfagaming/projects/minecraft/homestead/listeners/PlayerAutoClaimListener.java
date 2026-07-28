@@ -94,6 +94,13 @@ public final class PlayerAutoClaimListener implements Listener {
 		}
 		lastClaimAttempt.put(player, now);
 
+		//TODO
+		//Chunk coords -> world coords, then check, ill config the bounds later
+		if(Math.abs(chunk.getX()) * 16 < 20000 || Math.abs(chunk.getZ()) * 16 < 20000){
+			Messages.sendString(player, "Cannot claim within anarchy zone (+/- x/z 20000)");
+			return;
+		}
+
 		if (ChunkManager.isChunkInDisabledWorld(chunk)) {
 			Messages.send(player, "commands.claim.1");
 			return;

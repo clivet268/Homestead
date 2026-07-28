@@ -10,6 +10,7 @@ import tfagaming.projects.minecraft.homestead.resources.ResourceType;
 import tfagaming.projects.minecraft.homestead.resources.Resources;
 import tfagaming.projects.minecraft.homestead.resources.files.ConfigFile;
 import tfagaming.projects.minecraft.homestead.resources.files.RegionsFile;
+import tfagaming.projects.minecraft.homestead.tools.minecraft.chat.Messages;
 import tfagaming.projects.minecraft.homestead.tools.minecraft.chunks.ChunkUtility;
 import tfagaming.projects.minecraft.homestead.tools.minecraft.chunks.PersistentChunkTicket;
 
@@ -76,6 +77,11 @@ public final class ChunkManager {
 	 * @return {@link Error} if there is an error, <code>null</code> otherwise.
 	 */
 	public static Error claimChunk(long regionId, Chunk chunk) {
+
+		// Chunk coords -> world coords, then check, ill config the bounds later
+		if(Math.abs(chunk.getX()) * 16 < 20000 || Math.abs(chunk.getZ()) * 16 < 20000){
+			return Error.CHUNK_IN_ANARCHY_ZONE;
+		}
 		Region region = RegionManager.findRegion(regionId);
 
 		if (region == null) {
@@ -905,6 +911,7 @@ public final class ChunkManager {
 		CHUNK_NOT_FOUND,
 		CHUNK_IN_DISABLED_WORLD,
 		CHUNK_NOT_ADJACENT_TO_REGION,
-		CHUNK_WOULD_SPLIT_REGION
+		CHUNK_WOULD_SPLIT_REGION,
+		CHUNK_IN_ANARCHY_ZONE
 	}
 }

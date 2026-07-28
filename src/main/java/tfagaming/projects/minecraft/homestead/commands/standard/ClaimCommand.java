@@ -146,6 +146,14 @@ public class ClaimCommand extends CommandBuilder {
 		List<Chunk> chunksToClaim = new ArrayList<>();
 		for (int x = centerX - (radius - 1); x <= centerX + (radius - 1); x++) {
 			for (int z = centerZ - (radius - 1); z <= centerZ + (radius - 1); z++) {
+
+				// Chunk coords -> world coords, then check, ill config the bounds later
+				if(Math.abs(x) * 16 < 20000 || Math.abs(z) * 16 < 20000){
+					Messages.sendString(player, "Cannot claim within anarchy zone (+/- x/z 20000)");
+					// shoudl return? it should go to check the rest of the chunks imo i dont know why it dosent do that normally
+					continue;
+
+				}
 				Chunk chunk = centerChunk.getWorld().getChunkAt(x, z);
 
 				if (ChunkManager.isChunkInDisabledWorld(chunk)) {
@@ -207,6 +215,15 @@ public class ClaimCommand extends CommandBuilder {
 		ChunkManager.Error lastError = null;
 
 		for (Chunk chunk : chunksToClaim) {
+
+			// Chunk coords -> world coords, then check, ill config the bounds later
+			//TODO
+			if(Math.abs(chunk.getX()) * 16 < 20000 || Math.abs(chunk.getZ()) * 16 < 20000){
+				Messages.sendString(player, "Cannot claim within anarchy zone (+/- x/z 20000)");
+				//this is pointless given this implementation but is right given how i might suggest it be altered to be
+				continue;
+
+			}
 			ChunkManager.Error error = ChunkManager.claimChunk(region, chunk);
 
 			if (error != null) {
@@ -217,6 +234,7 @@ public class ClaimCommand extends CommandBuilder {
 			claimedCount++;
 		}
 
+		// why???????
 		if (lastError != null && claimedCount < chunksToClaim.size()) {
 			for (int i = 0; i < claimedCount; i++) {
 				ChunkManager.forceUnclaimChunk(region, chunksToClaim.get(i));
